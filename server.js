@@ -56,8 +56,6 @@ if (process.env.NODE_ENV === 'development') {
     const setupNgrok = async () => {
         await ngrok.authtoken(process.env.NGROK_AUTHTOKEN);
         const url = await ngrok.connect({ addr: process.env.PORT });
-        console.log(process.env.PORT)
-        console.log('url', url)
         bot.telegram.setWebhook(`${url}/${HOOK_PATH}`, {
             secret_token: process.env.SECRET_TOKEN,
             allowed_updates: ['message']
@@ -90,6 +88,7 @@ if (process.env.NODE_ENV === 'development') {
         secret_token: process.env.SECRET_TOKEN,
         allowed_updates: ['message']
     })
+    console.log('url', process.env.APP_ENDPOINT)
 
     app.post(`/${HOOK_PATH}`, async (req, res) => {
         bot.handleUpdate(req.body, res);
